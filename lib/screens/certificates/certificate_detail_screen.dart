@@ -171,32 +171,42 @@ class _CertificateDetailScreenState extends State<CertificateDetailScreen> {
                   children: [
                     // Category Tag & Issue Date
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: AppColors.getCategoryLightColor(cert.category),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Text(
-                            cert.category,
-                            style: TextStyle(
-                              color: catColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
+                        Flexible(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: AppColors.getCategoryLightColor(cert.category),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              cert.category,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: catColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                         ),
-                        const Spacer(),
-                        const Icon(Icons.calendar_month_outlined, size: 16, color: AppColors.textSecondary),
-                        const SizedBox(width: 4),
-                        Text(
-                          DateFormatter.formatFull(cert.issueDate),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: AppColors.textSecondary,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        const SizedBox(width: 8),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.calendar_month_outlined, size: 16, color: AppColors.textSecondary),
+                            const SizedBox(width: 4),
+                            Text(
+                              DateFormatter.formatFull(cert.issueDate),
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: AppColors.textSecondary,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -394,18 +404,22 @@ class _CertificateDetailScreenState extends State<CertificateDetailScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
             style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
             ),
           ),
         ],

@@ -64,23 +64,28 @@ class CertificateCard extends StatelessWidget {
                   children: [
                     // Category & Date Row
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: AppColors.getCategoryLightColor(certificate.category),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Text(
-                            certificate.category,
-                            style: TextStyle(
-                              color: catColor,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w700,
+                        Flexible(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                            decoration: BoxDecoration(
+                              color: AppColors.getCategoryLightColor(certificate.category),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              certificate.category,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: catColor,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         ),
-                        const Spacer(),
+                        const SizedBox(width: 6),
                         Text(
                           DateFormatter.formatShort(certificate.issueDate),
                           style: const TextStyle(
@@ -178,10 +183,10 @@ class CertificateCard extends StatelessWidget {
             // Thumbnail Banner
             Stack(
               children: [
-                _buildThumbnail(isPdf, double.infinity, 110),
+                _buildThumbnail(isPdf, double.infinity, 100),
                 Positioned(
-                  top: 8,
-                  right: 8,
+                  top: 6,
+                  right: 6,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.9),
@@ -194,10 +199,10 @@ class CertificateCard extends StatelessWidget {
                       icon: Icon(
                         certificate.isFavorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
                         color: certificate.isFavorite ? AppColors.favorite : AppColors.textMuted,
-                        size: 20,
+                        size: 18,
                       ),
                       padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                      constraints: const BoxConstraints(minWidth: 30, minHeight: 30),
                     ),
                   ),
                 ),
@@ -205,7 +210,7 @@ class CertificateCard extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -217,6 +222,8 @@ class CertificateCard extends StatelessWidget {
                     ),
                     child: Text(
                       certificate.category,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: catColor,
                         fontSize: 10,
@@ -224,18 +231,18 @@ class CertificateCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 5),
                   Text(
                     certificate.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 3),
                   Text(
                     organizerName,
                     maxLines: 1,

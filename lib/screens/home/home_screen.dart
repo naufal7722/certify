@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
             Container(
               width: 38,
               height: 38,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.primaryLight,
                 shape: BoxShape.circle,
               ),
@@ -48,26 +48,30 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  AppConstants.appName,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    AppConstants.appName,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
-                ),
-                Text(
-                  'Halo, ${auth.userName} 👋',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondary,
+                  Text(
+                    'Halo, ${auth.userName} 👋',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textSecondary,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -216,7 +220,7 @@ class HomeScreen extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
-                    childAspectRatio: 1.45,
+                    childAspectRatio: 1.25,
                     children: [
                       StatCard(
                         title: 'Total Sertifikat',
@@ -278,8 +282,15 @@ class HomeScreen extends StatelessWidget {
                           MaterialPageRoute(builder: (_) => const StatisticsTimelineScreen()),
                         );
                       },
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                      ),
                       icon: const Icon(Icons.show_chart_rounded, size: 18),
-                      label: const Text('Timeline & Grafik'),
+                      label: const Text(
+                        'Timeline & Grafik',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -290,8 +301,15 @@ class HomeScreen extends StatelessWidget {
                           MaterialPageRoute(builder: (_) => const OrganizersScreen()),
                         );
                       },
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                      ),
                       icon: const Icon(Icons.corporate_fare_rounded, size: 18),
-                      label: const Text('Penyelenggara'),
+                      label: const Text(
+                        'Penyelenggara',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                 ],
@@ -303,12 +321,16 @@ class HomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Sertifikat Terbaru',
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                  const Expanded(
+                    child: Text(
+                      'Sertifikat Terbaru',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   TextButton(

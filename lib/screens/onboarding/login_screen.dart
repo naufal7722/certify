@@ -99,25 +99,27 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Reset Kata Sandi'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Masukkan email Anda untuk menerima tautan pemulihan kata sandi akun Certify.',
-              style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: resetEmailCtrl,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                labelText: 'Email Akun',
-                hintText: 'nama@email.com',
-                prefixIcon: Icon(Icons.email_outlined, size: 20),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Masukkan email Anda untuk menerima tautan pemulihan kata sandi akun Certify.',
+                style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              TextField(
+                controller: resetEmailCtrl,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: 'Email Akun',
+                  hintText: 'nama@email.com',
+                  prefixIcon: Icon(Icons.email_outlined, size: 20),
+                ),
+              ),
+            ],
+          ),
         ),
         actions: [
           TextButton(
@@ -446,32 +448,40 @@ class _LoginScreenState extends State<LoginScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 24,
-                                      height: 24,
-                                      child: Checkbox(
-                                        value: _rememberMe,
-                                        activeColor: AppColors.primary,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(4),
+                                Flexible(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: Checkbox(
+                                          value: _rememberMe,
+                                          activeColor: AppColors.primary,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(4),
+                                          ),
+                                          onChanged: (val) {
+                                            setState(() => _rememberMe = val ?? true);
+                                          },
                                         ),
-                                        onChanged: (val) {
-                                          setState(() => _rememberMe = val ?? true);
-                                        },
                                       ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    const Text(
-                                      'Ingat saya',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.textSecondary,
+                                      const SizedBox(width: 8),
+                                      const Flexible(
+                                        child: Text(
+                                          'Ingat saya',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: AppColors.textSecondary,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
+                                const SizedBox(width: 8),
                                 TextButton(
                                   onPressed: _showForgotPasswordDialog,
                                   style: TextButton.styleFrom(
@@ -523,8 +533,9 @@ class _LoginScreenState extends State<LoginScreen> {
         
 
                   // Register Footer Link
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       const Text(
                         'Belum memiliki akun? ',

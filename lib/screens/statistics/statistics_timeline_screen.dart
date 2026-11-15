@@ -86,20 +86,25 @@ class _StatisticsTab extends StatelessWidget {
         children: [
           // 1. Overview Metric Banner
           Container(
-            padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: AppColors.border),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildMetricColumn('Total Portofolio', '$totalCerts', Icons.workspace_premium, AppColors.primary),
+                Expanded(
+                  child: _buildMetricColumn('Total Portofolio', '$totalCerts', Icons.workspace_premium, AppColors.primary),
+                ),
                 Container(height: 36, width: 1, color: AppColors.border),
-                _buildMetricColumn('Favorit', '$totalFavs', Icons.favorite, AppColors.favorite),
+                Expanded(
+                  child: _buildMetricColumn('Favorit', '$totalFavs', Icons.favorite, AppColors.favorite),
+                ),
                 Container(height: 36, width: 1, color: AppColors.border),
-                _buildMetricColumn('Penyelenggara', '${orgProvider.organizers.length}', Icons.apartment, AppColors.info),
+                Expanded(
+                  child: _buildMetricColumn('Penyelenggara', '${orgProvider.organizers.length}', Icons.apartment, AppColors.info),
+                ),
               ],
             ),
           ),
@@ -117,12 +122,14 @@ class _StatisticsTab extends StatelessWidget {
                     children: const [
                       Icon(Icons.calendar_today_rounded, size: 18, color: AppColors.primary),
                       SizedBox(width: 8),
-                      Text(
-                        'Pencapaian Berdasarkan Tahun',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
+                      Expanded(
+                        child: Text(
+                          'Pencapaian Berdasarkan Tahun',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
                       ),
                     ],
@@ -152,12 +159,14 @@ class _StatisticsTab extends StatelessWidget {
                     children: const [
                       Icon(Icons.pie_chart_outline_rounded, size: 18, color: AppColors.primary),
                       SizedBox(width: 8),
-                      Text(
-                        'Distribusi Kategori',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
+                      Expanded(
+                        child: Text(
+                          'Distribusi Kategori',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
                       ),
                     ],
@@ -175,14 +184,19 @@ class _StatisticsTab extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                entry.key,
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.textPrimary,
+                              Expanded(
+                                child: Text(
+                                  entry.key,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
+                              const SizedBox(width: 8),
                               Text(
                                 '${entry.value} sertifikat (${(percentage * 100).toStringAsFixed(0)}%)',
                                 style: TextStyle(
@@ -225,12 +239,14 @@ class _StatisticsTab extends StatelessWidget {
                     children: const [
                       Icon(Icons.corporate_fare_rounded, size: 18, color: AppColors.primary),
                       SizedBox(width: 8),
-                      Text(
-                        'Sertifikat Berdasarkan Penyelenggara',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
+                      Expanded(
+                        child: Text(
+                          'Sertifikat Berdasarkan Penyelenggara',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
                       ),
                     ],
@@ -283,6 +299,7 @@ class _StatisticsTab extends StatelessWidget {
 
   Widget _buildMetricColumn(String label, String value, IconData icon, Color color) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, color: color, size: 22),
         const SizedBox(height: 6),
@@ -293,11 +310,16 @@ class _StatisticsTab extends StatelessWidget {
             fontWeight: FontWeight.bold,
             color: color,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 2),
         Text(
           label,
+          textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
@@ -311,56 +333,67 @@ class _StatisticsTab extends StatelessWidget {
 
     return SizedBox(
       height: 160,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: sortedYears.map((year) {
-          final count = yearDist[year] ?? 0;
-          final barHeight = (count / maxCount) * 110;
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final barAreaWidth = max(constraints.maxWidth, sortedYears.length * 56.0);
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SizedBox(
+              width: barAreaWidth,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: sortedYears.map((year) {
+                  final count = yearDist[year] ?? 0;
+                  final barHeight = (count / maxCount) * 110;
 
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                '$count',
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
-                ),
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        '$count',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Container(
+                        width: 38,
+                        height: max(barHeight, 8),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [AppColors.primary, Color(0xFF9E8EFF)],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withOpacity(0.2),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '$year',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
               ),
-              const SizedBox(height: 6),
-              Container(
-                width: 38,
-                height: max(barHeight, 8),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppColors.primary, Color(0xFF9E8EFF)],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withOpacity(0.2),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '$year',
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ],
+            ),
           );
-        }).toList(),
+        },
       ),
     );
   }
@@ -456,23 +489,28 @@ class _TimelineTab extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                decoration: BoxDecoration(
-                                  color: AppColors.getCategoryLightColor(cert.category),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Text(
-                                  cert.category,
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
-                                    color: catColor,
+                              Flexible(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.getCategoryLightColor(cert.category),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    cert.category,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: catColor,
+                                    ),
                                   ),
                                 ),
                               ),
-                              const Spacer(),
+                              const SizedBox(width: 8),
                               Text(
                                 DateFormatter.formatShort(cert.issueDate),
                                 style: const TextStyle(

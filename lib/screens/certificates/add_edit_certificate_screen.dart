@@ -440,12 +440,14 @@ class _AddEditCertificateScreenState extends State<AddEditCertificateScreen> {
                         children: const [
                           Icon(Icons.attachment_rounded, size: 20, color: AppColors.primary),
                           SizedBox(width: 8),
-                          Text(
-                            'Berkas Dokumen Sertifikat *',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textPrimary,
+                          Expanded(
+                            child: Text(
+                              'Berkas Dokumen Sertifikat *',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textPrimary,
+                              ),
                             ),
                           ),
                         ],
@@ -636,11 +638,15 @@ class _AddEditCertificateScreenState extends State<AddEditCertificateScreen> {
                       const SizedBox(height: 8),
                       DropdownButtonFormField<String>(
                         value: _selectedCategory,
+                        isExpanded: true,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.category_outlined, size: 20),
                         ),
                         items: AppConstants.categories.map((cat) {
-                          return DropdownMenuItem(value: cat, child: Text(cat));
+                          return DropdownMenuItem(
+                            value: cat,
+                            child: Text(cat, overflow: TextOverflow.ellipsis),
+                          );
                         }).toList(),
                         onChanged: (val) {
                           if (val != null) setState(() => _selectedCategory = val);
@@ -652,10 +658,15 @@ class _AddEditCertificateScreenState extends State<AddEditCertificateScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            'Penyelenggara (Organizer) *',
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                          const Expanded(
+                            child: Text(
+                              'Penyelenggara (Organizer) *',
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
+                          const SizedBox(width: 8),
                           GestureDetector(
                             onTap: _showAddNewOrganizerDialog,
                             child: Row(
@@ -678,12 +689,16 @@ class _AddEditCertificateScreenState extends State<AddEditCertificateScreen> {
                       const SizedBox(height: 8),
                       DropdownButtonFormField<String>(
                         value: _selectedOrganizerId,
+                        isExpanded: true,
                         decoration: const InputDecoration(
                           hintText: 'Pilih penyelenggara',
                           prefixIcon: Icon(Icons.apartment_rounded, size: 20),
                         ),
                         items: organizers.map((org) {
-                          return DropdownMenuItem(value: org.id, child: Text(org.name));
+                          return DropdownMenuItem(
+                            value: org.id,
+                            child: Text(org.name, overflow: TextOverflow.ellipsis),
+                          );
                         }).toList(),
                         onChanged: (val) {
                           setState(() => _selectedOrganizerId = val);

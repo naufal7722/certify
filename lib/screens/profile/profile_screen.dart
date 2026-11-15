@@ -159,6 +159,8 @@ class ProfileScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: AppColors.textPrimary,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 2),
                           Text(
@@ -167,6 +169,8 @@ class ProfileScreen extends StatelessWidget {
                               fontSize: 13,
                               color: AppColors.textSecondary,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 6),
                           Container(
@@ -182,6 +186,8 @@ class ProfileScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.primary,
                               ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],

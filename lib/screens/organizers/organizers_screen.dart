@@ -98,31 +98,33 @@ class _OrganizersScreenState extends State<OrganizersScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Ubah Nama Penyelenggara'),
-        content: Form(
-          key: formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Perubahan nama akan otomatis diperbarui pada seluruh sertifikat yang terkait.',
-                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: textCtrl,
-                autofocus: true,
-                decoration: const InputDecoration(
-                  labelText: 'Nama Baru Penyelenggara',
+        content: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Perubahan nama akan otomatis diperbarui pada seluruh sertifikat yang terkait.',
+                  style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
                 ),
-                validator: (val) {
-                  if (val == null || val.trim().isEmpty) {
-                    return 'Nama tidak boleh kosong';
-                  }
-                  return null;
-                },
-              ),
-            ],
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: textCtrl,
+                  autofocus: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Nama Baru Penyelenggara',
+                  ),
+                  validator: (val) {
+                    if (val == null || val.trim().isEmpty) {
+                      return 'Nama tidak boleh kosong';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         actions: [
@@ -343,13 +345,18 @@ class _OrganizersScreenState extends State<OrganizersScreen> {
                                           fontWeight: FontWeight.bold,
                                           color: AppColors.textPrimary,
                                         ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                       const SizedBox(height: 4),
-                                      Row(
+                                      Wrap(
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        spacing: 6,
+                                        runSpacing: 4,
                                         children: [
                                           Container(
                                             padding: const EdgeInsets.symmetric(
-                                              horizontal: 8,
+                                              horizontal: 7,
                                               vertical: 2,
                                             ),
                                             decoration: BoxDecoration(
@@ -369,7 +376,6 @@ class _OrganizersScreenState extends State<OrganizersScreen> {
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(width: 8),
                                           Text(
                                             'Dibuat ${DateFormatter.formatShort(org.createdAt)}',
                                             style: const TextStyle(
@@ -386,12 +392,17 @@ class _OrganizersScreenState extends State<OrganizersScreen> {
                                   icon: const Icon(Icons.edit_outlined, size: 20),
                                   color: AppColors.textSecondary,
                                   tooltip: 'Ubah Nama',
+                                  padding: EdgeInsets.zero,
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: () => _showEditOrganizerDialog(org),
                                 ),
+                                const SizedBox(width: 4),
                                 IconButton(
                                   icon: const Icon(Icons.delete_outline, size: 20),
                                   color: AppColors.danger,
                                   tooltip: 'Hapus Penyelenggara',
+                                  padding: EdgeInsets.zero,
+                                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                                   onPressed: () => _handleDeleteOrganizer(org, count),
                                 ),
                               ],

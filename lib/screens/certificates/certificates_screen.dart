@@ -61,115 +61,120 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                 top: 20,
                 bottom: MediaQuery.of(context).viewInsets.bottom + 24,
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Header
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Filter Sertifikat',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Header
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Filter Sertifikat',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          certProvider.resetFilters();
-                          _searchController.clear();
-                          Navigator.pop(ctx);
-                        },
-                        child: const Text('Reset'),
-                      ),
-                    ],
-                  ),
-                  const Divider(),
-                  const SizedBox(height: 12),
-
-                  // 1. Category Filter
-                  const Text(
-                    'Kategori',
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-                  ),
-                  const SizedBox(height: 8),
-                  DropdownButtonFormField<String?>(
-                    value: certProvider.selectedCategory,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                        TextButton(
+                          onPressed: () {
+                            certProvider.resetFilters();
+                            _searchController.clear();
+                            Navigator.pop(ctx);
+                          },
+                          child: const Text('Reset'),
+                        ),
+                      ],
                     ),
-                    items: [
-                      const DropdownMenuItem(value: null, child: Text('Semua Kategori')),
-                      ...AppConstants.categories.map(
-                        (cat) => DropdownMenuItem(value: cat, child: Text(cat)),
-                      ),
-                    ],
-                    onChanged: (val) {
-                      certProvider.setSelectedCategory(val);
-                    },
-                  ),
-                  const SizedBox(height: 16),
+                    const Divider(),
+                    const SizedBox(height: 12),
 
-                  // 2. Organizer Filter
-                  const Text(
-                    'Penyelenggara',
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-                  ),
-                  const SizedBox(height: 8),
-                  DropdownButtonFormField<String?>(
-                    value: certProvider.selectedOrganizerId,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                    ),
-                    items: [
-                      const DropdownMenuItem(value: null, child: Text('Semua Penyelenggara')),
-                      ...orgProvider.organizers.map(
-                        (org) => DropdownMenuItem(value: org.id, child: Text(org.name)),
-                      ),
-                    ],
-                    onChanged: (val) {
-                      certProvider.setSelectedOrganizerId(val);
-                    },
-                  ),
-                  const SizedBox(height: 16),
-
-                  // 3. Year Filter
-                  if (years.isNotEmpty) ...[
+                    // 1. Category Filter
                     const Text(
-                      'Tahun Penerbitan',
+                      'Kategori',
                       style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                     ),
                     const SizedBox(height: 8),
-                    DropdownButtonFormField<int?>(
-                      value: certProvider.selectedYear,
+                    DropdownButtonFormField<String?>(
+                      value: certProvider.selectedCategory,
+                      isExpanded: true,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                       ),
                       items: [
-                        const DropdownMenuItem(value: null, child: Text('Semua Tahun')),
-                        ...years.map(
-                          (yr) => DropdownMenuItem(value: yr, child: Text('$yr')),
+                        const DropdownMenuItem(value: null, child: Text('Semua Kategori', overflow: TextOverflow.ellipsis)),
+                        ...AppConstants.categories.map(
+                          (cat) => DropdownMenuItem(value: cat, child: Text(cat, overflow: TextOverflow.ellipsis)),
                         ),
                       ],
                       onChanged: (val) {
-                        certProvider.setSelectedYear(val);
+                        certProvider.setSelectedCategory(val);
                       },
                     ),
-                    const SizedBox(height: 24),
-                  ],
+                    const SizedBox(height: 16),
 
-                  // Apply button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.pop(ctx),
-                      child: const Text('Terapkan Filter'),
+                    // 2. Organizer Filter
+                    const Text(
+                      'Penyelenggara',
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<String?>(
+                      value: certProvider.selectedOrganizerId,
+                      isExpanded: true,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      ),
+                      items: [
+                        const DropdownMenuItem(value: null, child: Text('Semua Penyelenggara', overflow: TextOverflow.ellipsis)),
+                        ...orgProvider.organizers.map(
+                          (org) => DropdownMenuItem(value: org.id, child: Text(org.name, overflow: TextOverflow.ellipsis)),
+                        ),
+                      ],
+                      onChanged: (val) {
+                        certProvider.setSelectedOrganizerId(val);
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
+                    // 3. Year Filter
+                    if (years.isNotEmpty) ...[
+                      const Text(
+                        'Tahun Penerbitan',
+                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                      ),
+                      const SizedBox(height: 8),
+                      DropdownButtonFormField<int?>(
+                        value: certProvider.selectedYear,
+                        isExpanded: true,
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                        ),
+                        items: [
+                          const DropdownMenuItem(value: null, child: Text('Semua Tahun', overflow: TextOverflow.ellipsis)),
+                          ...years.map(
+                            (yr) => DropdownMenuItem(value: yr, child: Text('$yr', overflow: TextOverflow.ellipsis)),
+                          ),
+                        ],
+                        onChanged: (val) {
+                          certProvider.setSelectedYear(val);
+                        },
+                      ),
+                      const SizedBox(height: 24),
+                    ],
+
+                    // Apply button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(ctx),
+                        child: const Text('Terapkan Filter'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
@@ -404,7 +409,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                           crossAxisCount: 2,
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 12,
-                          childAspectRatio: 0.76,
+                          childAspectRatio: 0.69,
                         ),
                         itemCount: filteredList.length,
                         itemBuilder: (ctx, index) {

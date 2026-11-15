@@ -51,18 +51,24 @@ class DocumentPreviewWidget extends StatelessWidget {
                   size: 20,
                 ),
                 const SizedBox(width: 8),
-                Text(
-                  isPdf ? 'Dokumen Digital (PDF)' : 'Dokumen Gambar (JPG/PNG)',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: isPdf ? AppColors.danger : AppColors.primary,
+                Expanded(
+                  child: Text(
+                    isPdf ? 'Dokumen Digital (PDF)' : 'Dokumen Gambar (JPG/PNG)',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: isPdf ? AppColors.danger : AppColors.primary,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(width: 8),
                 IconButton(
                   icon: const Icon(Icons.share_outlined, size: 20),
                   tooltip: 'Bagikan Dokumen',
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                   onPressed: () async {
                     try {
                       await ShareService.shareCertificate(
@@ -209,6 +215,8 @@ class DocumentPreviewWidget extends StatelessWidget {
             Text(
               'Penyelenggara: $organizerName',
               style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 8),
             Container(
