@@ -1,0 +1,73 @@
+[0] (Style: Title): LAPORAN 
+[1] (Style: Title): ASESMEN TENGAH SEMESTER 
+[2] (Style: Title): (PRAKTIKUM)
+[3] (Style: Title): PEMROGRAMAN PERANGKAT BERGERAK
+[6] (Style: Normal): NAMA				: Shabir Khan
+[7] (Style: Normal): NIM					: 4342501015
+[8] (Style: Normal): KELAS				: TRPL 3A - PAGI
+[9] (Style: Normal): SEMESTER				: Ganjil 2026/2027
+[10] (Style: Normal): JADWAL ATS PRAKTIKUM	: Kamis 12 November
+[12] (Style: Normal): KOORDINATOR MATA KULIAH	: Ahmadi Irmansyah Lubis
+[13] (Style: Normal): PENGAMPU MATA KULIAH	: Iqbal Afif 
+[16] (Style: Normal): PROGRAM STUDI TEKNOLOGI REKAYASA PERANGKAT LUNAK
+[17] (Style: Normal): JURUSAN TEKNIK INFORMATIKA
+[18] (Style: Normal): POLITEKNIK NEGERI BATAM
+[19] (Style: Normal): 2026
+[20] (Style: Normal): 1. Langkah - Langkah Pengerjaan 
+[21] (Style: Normal): Langkah 1. Membuka folder www Laragon
+[22] (Style: Normal): Buka File Explorer, lalu masuk ke folder C:\laragon\www. Folder ini dipakai sebagai tempat menyimpan project Bookly.
+[25] (Style: Normal): Langkah 2. Membuka Command Prompt di folder tersebut
+[26] (Style: Normal): Pada address bar File Explorer, ketik cmd lalu tekan Enter. Command Prompt terbuka langsung di lokasi C:\laragon\www.
+[28] (Style: Normal): Langkah 3. Menjalankan perintah flutter create
+[29] (Style: Normal): Di Command Prompt, ketik flutter create bookly lalu tekan Enter. Perintah ini membuat project Flutter baru bernama bookly.
+[32] (Style: Normal): Langkah 4. Project berhasil dibuat
+[33] (Style: Normal): Flutter menampilkan pesan Wrote 131 files. dan All done!, yang menandakan project berhasil dibuat. Kode aplikasi berada di bookly\lib\main.dart.
+[36] (Style: Normal): Langkah 5. Memastikan folder project terbentuk
+[37] (Style: Normal): Kembali ke File Explorer. Folder bookly sudah muncul di C:\laragon\www, sesuai nama yang diberikan saat flutter create.
+[40] (Style: Normal): Langkah 6. Masuk ke folder project dan membuka VS Code
+[41] (Style: Normal): Di Command Prompt, ketik cd bookly untuk masuk ke folder project, lalu ketik code . untuk membuka folder tersebut di Visual Studio Code.
+[44] (Style: Normal): Langkah 7. Project terbuka di Visual Studio Code
+[45] (Style: Normal): Visual Studio Code terbuka dengan project bookly. Panel Explorer menampilkan struktur project, termasuk folder lib yang berisi models, providers, screens, utils, widgets, dan main.dart.
+[48] (Style: Normal): Langkah 8. Folder models
+[49] (Style: Normal): Buka folder lib/models. Folder ini berisi dua class data:
+[50] (Style: Normal): book_model.dart: berisi enum ReadingStatus (Belum Dibaca, Sedang Dibaca, Selesai Dibaca) dan class Book yang menyimpan id, userId, judul, penulis, kategori, total halaman, halaman terakhir dibaca, deskripsi, warna sampul, serta waktu dibuat dan diperbarui. Di dalamnya ada getter remainingPages (sisa halaman), progressRatio dan progressPercentage (progres 0-100%), dan status yang menentukan status baca otomatis dari halaman saat ini: halaman 0 berarti Belum Dibaca, kurang dari total halaman berarti Sedang Dibaca, dan sama dengan atau lebih dari total halaman berarti Selesai Dibaca. Method copyWith membuat salinan buku dengan sebagian data diubah.
+[51] (Style: Normal): user_model.dart: berisi class UserModel dengan id, nama, email, dan bio (bawaan: "Pecinta buku & pembaca aktif"), serta copyWith untuk memperbarui data profil.
+[55] (Style: Normal): Langkah 9. Folder providers
+[56] (Style: Normal): Buka folder lib/providers. Provider mengelola state aplikasi memakai ChangeNotifier, dan setiap perubahan memanggil notifyListeners() supaya tampilan ikut diperbarui.
+[57] (Style: Normal): auth_provider.dart: AuthProvider menyimpan pengguna yang sedang login. login menunggu 500 ms untuk mensimulasikan proses, lalu memakai akun bawaan dari DummyData jika email cocok, atau membuat pengguna baru dengan nama dari bagian email sebelum tanda @. register membuat pengguna baru dari nama dan email. updateProfile mengubah nama, email, dan bio. changePassword masih berupa simulasi (selalu berhasil), dan logout mengosongkan pengguna.
+[58] (Style: Normal): book_provider.dart: BookProvider menyimpan daftar buku (dimuat dari DummyData.getInitialBooks()) beserta state pencarian, filter status, filter kategori, dan urutan (SortOption: Terakhir Diperbarui, Terbaru Ditambahkan, Judul A-Z, Progres Tertinggi). Getter filteredBooks menerapkan pencarian pada judul dan penulis, filter status, filter kategori, lalu pengurutan. Getter lain menyiapkan data dashboard: continueReadingBooks, recentlyUpdatedBooks, unreadPreviewBooks, serta angka statistik (jumlah buku, belum dibaca, sedang dibaca, selesai, dan total halaman terbaca). Aksi yang tersedia: addBook, updateBook, deleteBook, dan updateProgress yang menolak nilai kurang dari 0 atau melebihi total halaman, ditambah setter filter dan resetFilters.
+[62] (Style: Normal): Langkah 10. Folder screens/auth
+[63] (Style: Normal): Buka folder lib/screens/auth. Folder ini berisi halaman masuk dan pendaftaran.
+[64] (Style: Normal): login_screen.dart: halaman "Masuk ke Bookly" dengan form email dan kata sandi (kata sandi bisa ditampilkan atau disembunyikan). Validasi: email wajib diisi, kata sandi wajib diisi dan minimal 6 karakter. Saat tombol masuk ditekan, AuthProvider.login dipanggil dan jika berhasil pengguna dipindahkan ke MainNavigationScreen. Tautan "Daftar sekarang" membuka halaman pendaftaran. Kolom email dan kata sandi sudah terisi nilai contoh supaya mudah diuji.
+[65] (Style: Normal): register_screen.dart: halaman "Buat akun & mulai membaca" dengan nama lengkap, email, kata sandi, dan konfirmasi kata sandi. Validasi: semua kolom wajib diisi, format email harus valid, kata sandi minimal 6 karakter, dan konfirmasi harus sama dengan kata sandi. Jika berhasil, AuthProvider.register dipanggil lalu pengguna masuk ke MainNavigationScreen.
+[68] (Style: Normal): Langkah 11. Folder screens/books
+[69] (Style: Normal): Buka folder lib/screens/books. Folder ini berisi halaman untuk mengelola koleksi buku.
+[70] (Style: Normal): my_books_screen.dart: halaman "Rak bukumu" berisi daftar koleksi. Tersedia kolom pencarian ("Cari judul atau penulis..."), filter status dan kategori, serta lembar "Urutkan koleksi" (bottom sheet) untuk memilih urutan. Daftar diambil dari BookProvider.filteredBooks dan ditampilkan dengan BookCard. Jika tidak ada hasil, tampil "Buku tidak ditemukan" dengan tombol "Reset filter".
+[71] (Style: Normal): book_detail_screen.dart: halaman "Detail buku" yang menampilkan sampul, judul, penulis, kategori, progres membaca, deskripsi ("Tentang buku ini"), serta tanggal ditambahkan dan diperbarui. Dari halaman ini pengguna bisa memperbarui progres lewat UpdateProgressSheet, membuka form edit (AddEditBookScreen), atau menghapus buku setelah dikonfirmasi lewat dialog "Hapus Buku?".
+[72] (Style: Normal): add_edit_book_screen.dart: satu form untuk "Tambah buku baru" dan "Edit buku". Class ini menerima Book?: jika ada isinya berarti mode edit, jika kosong berarti tambah buku. Isian: judul, penulis, kategori, total halaman, deskripsi (opsional), dan warna sampul. Validasi: judul, penulis, dan total halaman wajib diisi; total halaman harus angka lebih dari 0 dan saat edit tidak boleh kurang dari progres saat ini. Tombol simpan memanggil addBook atau updateBook.
+[77] (Style: Normal): Langkah 12. Folder screens/dashboard
+[78] (Style: Normal): Buka folder lib/screens/dashboard. dashboard_screen.dart adalah halaman beranda yang tampil setelah login. Isinya: tanggal hari ini dalam format bahasa Indonesia (memakai intl), nama pengguna dari AuthProvider, bagian "Lanjutkan membaca" yang menampilkan buku berstatus Sedang Dibaca dari continueReadingBooks memakai BookCard, bagian "Menanti untuk dibaca" yang menampilkan buku belum dibaca dari unreadPreviewBooks, dan tombol "Lihat semua" yang pindah ke tab koleksi dengan filter yang sesuai. Jika belum ada buku yang sedang dibaca, tampil teks pengganti.
+[81] (Style: Normal): Langkah 13. Folder screens/profile
+[82] (Style: Normal): Buka folder lib/screens/profile. Folder ini berisi halaman profil pengguna.
+[83] (Style: Normal): profile_screen.dart: halaman "Profilmu" yang menampilkan data pengguna dan "Pencapaian membaca" (Halaman, Koleksi, Selesai), dengan menu "Edit profil", "Ganti kata sandi", dan "Keluar dari akun". Keluar menampilkan dialog konfirmasi, lalu memanggil AuthProvider.logout() dan kembali ke LoginScreen.
+[84] (Style: Normal): edit_profile_screen.dart: form nama lengkap, email, dan bio yang sudah terisi data pengguna saat ini. Nama dan email wajib diisi, dan format email harus valid. Tombol simpan memanggil updateProfile, menutup halaman, lalu menampilkan pesan "Profil berhasil diperbarui!".
+[85] (Style: Normal): change_password_screen.dart: form kata sandi saat ini, kata sandi baru, dan konfirmasi. Semua kolom wajib diisi, minimal 6 karakter, kata sandi baru harus berbeda dari yang lama, dan konfirmasi harus sama. Tombol simpan memanggil changePassword lalu menampilkan pesan "Kata sandi berhasil diperbarui!".
+[90] (Style: Normal): Langkah 14. File di folder screens
+[91] (Style: Normal): Di luar subfolder, folder lib/screens berisi dua file:
+[92] (Style: Normal): main_navigation_screen.dart: kerangka halaman utama dengan bottom navigation tiga tab: Beranda (DashboardScreen), Koleksi (MyBooksScreen), dan Profil (ProfileScreen). Ketiganya ditampung dalam IndexedStack sehingga kondisi tiap tab tetap terjaga saat berpindah. Tombol tambah mengambang membuka AddEditBookScreen dan disembunyikan di tab Profil. Method switchTab dipakai dashboard untuk pindah ke tab Koleksi.
+[93] (Style: Normal): splash_screen.dart: halaman pembuka dengan animasi progres dan teks "Menyiapkan perpustakaan Anda...". Setelah sekitar 2,5 detik, aplikasi pindah dengan transisi fade ke MainNavigationScreen jika pengguna sudah login, atau ke LoginScreen jika belum.
+[97] (Style: Normal): Langkah 15. Folder utils
+[98] (Style: Normal): Buka folder lib/utils. Folder ini berisi pengaturan tampilan dan data awal.
+[99] (Style: Normal): app_theme.dart: class AppTheme berisi konstanta warna (krem, hijau hutan, sage, terakota, emas, dan warna teks), palet warna sampul buku, gaya teks (serifTitle dan sansLabel), serta lightTheme yang mengatur tema komponen seperti kartu, tombol, floating action button, bottom navigation, dan dialog.
+[100] (Style: Normal): dummy_data.dart: class DummyData berisi pengguna bawaan (defaultUser), daftar kategori (Nonfiksi dan Fiksi), dan getInitialBooks() yang mengembalikan 12 buku contoh, misalnya Atomic Habits, Clean Code, dan One Piece Vol. 1, lengkap dengan jumlah halaman, progres, deskripsi, dan warna sampul.
+[106] (Style: Normal): Langkah 16. Folder widgets
+[107] (Style: Normal): Buka folder lib/widgets. Folder ini berisi komponen yang dipakai ulang di beberapa halaman.
+[108] (Style: Normal): book_card.dart: widget BookCard untuk menampilkan satu buku dalam daftar, lengkap dengan sampul (BookCoverThumbnail), label status (SEDANG DIBACA, BELUM DIBACA, atau SELESAI DIBACA), dan progress bar dari progressRatio. Warna berubah hijau jika buku selesai dibaca. Menyentuh kartu membuka BookDetailScreen.
+[109] (Style: Normal): stat_card.dart: widget StatCard, kartu statistik kecil yang berisi ikon, angka (value), dan judul (title), dengan onTap opsional.
+[110] (Style: Normal): update_progress_sheet.dart: bottom sheet "Catat perjalananmu" untuk memperbarui halaman terakhir yang dibaca. Isian halaman divalidasi (wajib diisi, harus angka, tidak kurang dari 0, dan tidak melebihi total halaman), pratinjau status baru (Belum dibaca, Sedang dibaca, atau Selesai dibaca) ikut berubah saat angka diubah, dan tombol "Simpan progres" memanggil BookProvider.updateProgress. Jika gagal, tampil pesan "Gagal memperbarui progres. Periksa halaman."
+[116] (Style: Normal): Langkah 17. File main.dart
+[117] (Style: Normal): Terakhir, buka lib/main.dart, titik masuk aplikasi. Fungsi main() menyiapkan binding Flutter, menginisialisasi format tanggal bahasa Indonesia (initializeDateFormatting('id_ID')), lalu menjalankan BooklyApp. BooklyApp membungkus MaterialApp dengan MultiProvider yang mendaftarkan AuthProvider dan BookProvider, memakai tema AppTheme.lightTheme, mematikan banner debug, dan menjadikan SplashScreen sebagai halaman pertama.
+[120] (Style: Normal): 2. Link Video
+[122] (Style: Normal): 3. Link Github
+
+=== TABLES ===
